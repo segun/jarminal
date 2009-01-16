@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd ~/
+mkdir -p .jarminal
+cd .jarminal
+
+JAVA_FILE=$1
+CLASS_FILE=$2
+CLASS_NAME=$3
+
+if [ -f $JAVA_FILE ]
+then
+    rm $JAVA_FILE
+    if [ -f $CLASS_FILE ]
+    then
+        rm $CLASS_FILE
+    fi
+fi
+
+touch $JAVA_FILE
+
+echo -e "
+    import java.util.*;
+    public class $CLASS_NAME{
+        public static void main(String args[]) {
+        " >> $JAVA_FILE
+

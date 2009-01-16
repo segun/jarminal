@@ -1,5 +1,0 @@
-#!/bin/bash
-
-mkdir -p ~/.jarminal
-
-touch ~/.jarminal/Main.java
