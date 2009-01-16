@@ -2,3 +2,4 @@ build/
 build
 *.swo
 *.swp
+sed_out

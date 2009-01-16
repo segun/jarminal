@@ -10,15 +10,15 @@ fi
 
 
 start_interactive_terminal() {
-    echo -n ">> "
+    echo -n "java> "
     read DATA
     while [ "$DATA" != "exit()" ]
     do
         parse_data "$DATA"
-        echo -n ">> "
+        echo -n "java> "
         read DATA
     done
-    echo ">>"
+    echo "java> "
 }
 
 parse_data() {
@@ -36,10 +36,10 @@ parse_data() {
             compile_java_file
             execute_java_file "$CLASS_FILE" "$CLASS_NAME"
             ;;
-        class_def)
+        classdef)
             if [ "${args[1]}" == "" ]
             then
-                echo "Usage: class_def class_name"
+                echo "Usage: classdef class_name"
             else
                 create_class ${args[1]}
             fi
@@ -65,7 +65,7 @@ create_class() {
     CLASS_FILE="$1.class"
     CLASS_NAME="$1"
         
-    read_append "endclass_def" $JAVA_FILE
+    read_append "endclassdef" $JAVA_FILE
 
     compile_java_file 
 }
