@@ -29,3 +29,7 @@ jarminal(terminal -te +ja) :))
 
     Dont mind me....what I want now is someone who can port it to windows. I am ready and equipped to do the linux version.
         ......or so i thought
+
+16.01.09
+
+    Now we need to capture keys, so that backspace(at least) works correctly
