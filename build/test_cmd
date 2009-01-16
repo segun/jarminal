@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+echo "All: $*"
+
+echo "The name of the shell: $0"
+
+echo "The Third Parameter: $3"
+
+echo "Same as *: $@"
+
+echo "Number of arguments: $#"
+
+echo "Exit status of last command: $?"
+
+echo "The current option flag: $-"
+
+echo "PID of the shell: $$"
+
+echo "PID of most recent BG Command: $!"

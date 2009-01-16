@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ -d $JAVA_HOME ]
+then
+    RESULT=0
+else
+    echo "No JAVA_HOME environment variable found. Please set"        
+    RESULT=1
+fi
+
+JAVA_FILE="Jarminal.java"
+CLASS_FILE="Jarminal.class"
+CLASS_NAME="Jarminal"
+
+CMD_OPTIONS="-Xlint:unchecked"
