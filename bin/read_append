@@ -1,0 +1,30 @@
+#!/bin/bash
+
+cd ~/.jarminal
+
+echo $1 >> $2
+_DATA=`jarminal_read`
+GET_OUT=1
+
+while [ $GET_OUT -gt 0 ]
+do    
+    echo "$_DATA" >> $2
+    for args in $_DATA
+    do
+        case $args in
+            {)
+                GET_OUT=`echo "$GET_OUT + 1" | bc`
+                ;;
+            })
+                GET_OUT=`echo "$GET_OUT - 1" | bc`
+                ;;            
+        esac
+    done    
+
+    if [ $GET_OUT -eq 0 ]
+    then
+       exit 
+    fi
+
+    _DATA=`jarminal_read`
+done

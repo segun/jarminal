@@ -4,6 +4,8 @@ cd ~/
 mkdir -p .jarminal
 cd .jarminal
 
+. jenv
+
 JAVA_FILE=$1
 CLASS_FILE=$2
 CLASS_NAME=$3
@@ -19,9 +21,13 @@ fi
 
 touch $JAVA_FILE
 
+if [ -f $IMPORT_FILE ]
+then
+    cat $IMPORT_FILE >> $JAVA_FILE
+fi
+
 echo -e "
     import java.util.*;
     public class $CLASS_NAME{
         public static void main(String args[]) {
         " >> $JAVA_FILE
-

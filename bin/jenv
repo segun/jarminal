@@ -11,5 +11,6 @@ fi
 JAVA_FILE="Jarminal.java"
 CLASS_FILE="Jarminal.class"
 CLASS_NAME="Jarminal"
+IMPORT_FILE=imports.jarminal
 
 CMD_OPTIONS="-Xlint:unchecked"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. jenv
+
 cd ~/
 mkdir -p .jarminal
 cd .jarminal
@@ -19,13 +21,18 @@ fi
 
 touch $JAVA_FILE
 
+if [ -f $IMPORT_FILE ] 
+then
+    cat $IMPORT_FILE >> $JAVA_FILE
+fi
+
 echo -e "
     import java.util.*;
     public class $CLASS_NAME{
         public static void main(String args[]) {
         " >> $JAVA_FILE
 
-echo $1 >> $JAVA_FILE
+echo "$1" >> $JAVA_FILE
 
 echo "
             System.exit(0);

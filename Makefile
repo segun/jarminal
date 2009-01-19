@@ -9,7 +9,8 @@ deploy: clean build
 
 build:
 	@mkdir -p build
-	@cp src/* build/
+	@cp bin/* build/
+	@cc -o build/jarminal_read src/readline.c
 
 clean:
 	@rm -rf build		

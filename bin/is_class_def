@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. jenv
+
+_LINE="$1"
+
+CLASS_POS=`expr match "$_LINE" ".*class.*"`
+
+echo $CLASS_POS
