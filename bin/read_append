@@ -3,7 +3,8 @@
 cd ~/.jarminal
 
 echo $1 >> $2
-_DATA=`jarminal_read`
+jarminal_read
+_DATA=`cat .data_in`
 GET_OUT=1
 
 while [ $GET_OUT -gt 0 ]
@@ -26,5 +27,6 @@ do
        exit 
     fi
 
-    _DATA=`jarminal_read`
+    jarminal_read
+    _DATA=`cat .data_in`
 done

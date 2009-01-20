@@ -28,15 +28,16 @@ get_next_java_file() {
 start_interactive_terminal() {
     cd ~/.jarminal
 
-    echo -n "java> "
-    DATA=`jarminal_read`
+    #echo -n "jarminal> "
+    jarminal_read
+    DATA=`cat .data_in`
     while [ "$DATA" != "exit()" ]
     do
         parse_data "$DATA"
-        echo -n "java> "
-        DATA=`jarminal_read`
+        jarminal_read
+        DATA=`cat .data_in`
     done
-    echo "java> "
+    echo "jarminal> "
 }
 
 parse_data() {
