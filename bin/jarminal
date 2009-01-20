@@ -2,6 +2,8 @@
 
 . jenv
 
+touch ~/.jarminal/term.pid
+
 if [ $RESULT -eq 1 ]
 then
     echo "Exiting..."
@@ -31,8 +33,15 @@ start_interactive_terminal() {
     #echo -n "jarminal> "
     jarminal_read
     DATA=`cat .data_in`
+
     while [ "$DATA" != "exit()" ]
     do
+        case $DATA in
+            "exit()" | "exit" | "quit()" | "quit" | "exit;" | "exit();" | "quit;" | "quit();")        
+                rm *
+                exit
+                ;;
+        esac
         parse_data "$DATA"
         jarminal_read
         DATA=`cat .data_in`
@@ -142,23 +151,41 @@ complete_java_file() {
     echo " System.exit(0); } }" >> $JAVA_FILE
 }
 
-
 case "$1" in
-    -e)
-        cd ~/.jarminal
-        rm -rf *
+    -e | --execute)
         create_java_file "$2" "$JAVA_FILE" "$CLASS_FILE" "$CLASS_NAME"
         compile_java_file 
         execute_java_file "$CLASS_FILE" "$CLASS_NAME"
+        cd ~/.jarminal
+        rm *
         ;;
-    -i)
+    -i | --interactive)
         start_interactive_terminal
-        ;;
+        cd ~/.jarminal
+        rm *
+        ;;        
+    -h | --help)
+        echo -e -n "Jarminal is a Java Console.
+
+It provides you with basic functionalities to quickly execute java commands in the terminal
+
+Synopsis: jarminal [options] [command]
+
+Options can be any of
+-e, --execute: Executes a java command specified by [command]. The user must manually escape strings
+
+-i, --interactive: Starts an interactive shell.
+\tIn this mode, user dont have to escape strings.
+\timport statements are remembered during every interactive session.
+\tclass declarations are also remembered during every interactive session
+
+-h, --help: displays this message\n\n"
+        ;;             
+
     *)
-        echo "Type jarminal --help for help info"
+        echo -e -n "Type jarminal --help for help info\n\n"
 esac        
 
-cd ~/.jarminal
-rm *
+
 exit 0;
 
