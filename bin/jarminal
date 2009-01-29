@@ -30,7 +30,8 @@ get_next_java_file() {
 start_interactive_terminal() {
     cd ~/.jarminal
 
-    #echo -n "jarminal> "
+    echo -n "jarminal>> "
+
     jarminal_read
     DATA=`cat .data_in`
 
@@ -43,6 +44,8 @@ start_interactive_terminal() {
                 ;;
         esac
         parse_data "$DATA"
+
+        echo -n "jarminal>> "
         jarminal_read
         DATA=`cat .data_in`
     done
@@ -178,6 +181,7 @@ Options can be any of
 \tIn this mode, user dont have to escape strings.
 \timport statements are remembered during every interactive session.
 \tclass declarations are also remembered during every interactive session
+\tuser can also put a block of code in {......}
 
 -h, --help: displays this message\n\n"
         ;;             

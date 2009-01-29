@@ -3,7 +3,6 @@
 import readline
 import os
 
-print "jarminal>>",
 s = raw_input()
 
 f = open(".data_in", "w")
