@@ -6,8 +6,10 @@ all: build
 
 build:
 	@mkdir -p build/usr/bin
+	@mkdir -p build/etc
 	@cp bin/* build/usr/bin/
 	@cp src/* build/usr/bin/
+	@cp conf/* build/etc
 
 clean:
 	@rm -rf build		

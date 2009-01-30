@@ -2,7 +2,7 @@
 
 . jenv
 
-touch ~/.jarminal/term.pid
+sudo touch ~/.jarminal/term.pid
 
 if [ $RESULT -eq 1 ]
 then
@@ -41,7 +41,7 @@ start_interactive_terminal() {
             "exit()" | "exit" | "quit()" | "quit" | "exit;" | "exit();" | "quit;" | "quit();")        
                 rm *
                 exit
-                ;;
+                ;;                            
         esac
         parse_data "$DATA"
 
@@ -54,7 +54,7 @@ start_interactive_terminal() {
 
 parse_data() {
     cd ~/.jarminal
-
+        
     HAS_BRACE=`expr index "$1" "{"`
     if [ $HAS_BRACE -gt 0 ]
     then
@@ -78,11 +78,28 @@ parse_data() {
 
     args=()
     COUNTER=0
-    for arg in "$1" 
+    for arg in $1 
     do
         args[$COUNTER]=$arg
         COUNTER=$[ $COUNTER + 1 ]
     done
+    
+    IS_HELP=0
+    if [ $COUNTER -eq 2 ] && [ ${args[$COUNTER - 2]} == "help" ]
+    then
+        jarminal_help "${args[$COUNTER - 1]}"
+        IS_HELP=1
+    elif [ $COUNTER -eq 1 ]
+    then
+        if [ ${args[$COUNTER - 1]} == "help" ]
+        then
+            echo -e "\nPlease specify a fully qualified class name\n"        
+            IS_HELP=1
+        fi
+    elif [ $COUNTER -eq 0 ]
+    then
+        COUNTER=1
+    fi
 
     case ${args[$COUNTER - 1]} in
         cls)
@@ -92,17 +109,14 @@ parse_data() {
             clear
             ;;
         *)    
-            if [ $HAS_IMPORT -eq 0 ]
+            if [ $HAS_IMPORT -eq 0 ] && [ $HAS_BRACE -eq 0 ] && [ $IS_HELP -eq 0 ]
             then
-                if [ $HAS_BRACE -eq 0 ] 
-                then
-                    get_next_java_file
-                    _DATA="$1"
-                    echo "$_DATA" | sed "s/\"/\\\"/g" > sed_out
-                    create_java_file "`cat sed_out`" "$JAVA_FILE" "$CLASS_FILE" "$CLASS_NAME"
-                    compile_java_file 
-                    execute_java_file "$CLASS_FILE" "$CLASS_NAME"
-                fi
+                get_next_java_file
+                _DATA="$1"
+                echo "$_DATA" | sed "s/\"/\\\"/g" > sed_out
+                create_java_file "`cat sed_out`" "$JAVA_FILE" "$CLASS_FILE" "$CLASS_NAME"
+                compile_java_file 
+                execute_java_file "$CLASS_FILE" "$CLASS_NAME"
             fi
             ;; 
     esac
@@ -160,32 +174,35 @@ case "$1" in
         compile_java_file 
         execute_java_file "$CLASS_FILE" "$CLASS_NAME"
         cd ~/.jarminal
-        rm *
+        sudo rm *
         ;;
     -i | --interactive)
         start_interactive_terminal
         cd ~/.jarminal
-        rm *
+        sudo rm *
         ;;        
     -h | --help)
-        echo -e -n "Jarminal is a Java Console.
-
-It provides you with basic functionalities to quickly execute java commands in the terminal
-
-Synopsis: jarminal [options] [command]
-
-Options can be any of
--e, --execute: Executes a java command specified by [command]. The user must manually escape strings
-
--i, --interactive: Starts an interactive shell.
-\tIn this mode, user dont have to escape strings.
-\timport statements are remembered during every interactive session.
-\tclass declarations are also remembered during every interactive session
-\tuser can also put a block of code in {......}
-
--h, --help: displays this message\n\n"
-        ;;             
-
+        if [ "$2" == "" ]
+        then
+                echo -e "Jarminal is a Java Interactive Shell."
+                echo -e "It provides you with basic functionalities to quickly execute java commands in the terminal"
+                echo -e "Synopsis: jarminal [options] [command]"
+                echo -e "Options can be any of"
+                echo -e "-e, --execute: Executes a java command specified by [command]. The user must manually escape strings"
+                echo -e "-i, --interactive: Starts an interactive shell."
+                echo -e "\tIn this mode, user dont have to escape strings."
+                echo -e "\timport statements are remembered during every interactive session."
+                echo -e "\tclass declarations are also remembered during every interactive session"
+                echo -e "\tuser can also put a block of code in {......}"
+                echo -e "\thelp for java classes are available. e.g help java.awt.CheckBox"
+                echo -e "-h, --help: displays this message"
+                echo -e "\tIf a fully qualified class name is provided when calling help"
+                echo -e "\t(e.g jarminal -h java.util.Vector), jarminal will display the java doc file"
+                echo -e "\tfor this to work properly however, you need to configure the java_doc_path in the configuration file\n\n"
+            else
+                jarminal_help "$2"
+            fi
+        ;;                     
     *)
         echo -e -n "Type jarminal --help for help info\n\n"
 esac        

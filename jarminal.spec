@@ -7,6 +7,8 @@ Group: Applications
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-build
 Prereq: python
+Prereq: jdk
+Prereq: elinks
 
 %description
 This application is a java shell. It emulates the python shell to provide a 
@@ -37,5 +39,6 @@ rm -rf ${RPM_BUILD_ROOT}
 /usr/bin/jarminal_read
 /usr/bin/jenv
 /usr/bin/read_append
-
+/usr/bin/jarminal_help
+/etc/jarminal.conf
 %post
