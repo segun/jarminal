@@ -7,9 +7,11 @@ all: build
 build:
 	@mkdir -p build/usr/bin
 	@mkdir -p build/etc
+	@mkdir -p build/usr/local/man/man1
 	@cp bin/* build/usr/bin/
 	@cp src/* build/usr/bin/
 	@cp conf/* build/etc
+	@cp manpage/* build/usr/local/man/man1
 
 clean:
 	@rm -rf build		

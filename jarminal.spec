@@ -41,4 +41,6 @@ rm -rf ${RPM_BUILD_ROOT}
 /usr/bin/read_append
 /usr/bin/jarminal_help
 /etc/jarminal.conf
+/usr/local/man/man1/jarminal.1
+
 %post

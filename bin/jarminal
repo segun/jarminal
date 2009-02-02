@@ -1,8 +1,8 @@
 #!/bin/bash
 
 . jenv
-
-sudo touch ~/.jarminal/term.pid
+mkdir -p ~/.jarminal
+touch ~/.jarminal/term.pid
 
 if [ $RESULT -eq 1 ]
 then
@@ -174,12 +174,12 @@ case "$1" in
         compile_java_file 
         execute_java_file "$CLASS_FILE" "$CLASS_NAME"
         cd ~/.jarminal
-        sudo rm *
+        rm *
         ;;
     -i | --interactive)
         start_interactive_terminal
         cd ~/.jarminal
-        sudo rm *
+        rm *
         ;;        
     -h | --help)
         if [ "$2" == "" ]

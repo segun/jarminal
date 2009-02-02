@@ -1,0 +1,144 @@
+.\" Man Page for jarminal
+
+.TH jarminal 1 "02 February 2008" "0.1" "Jarminal"
+
+.SH NAME
+jarminal \- a java interactive shell
+.SH SYNOPSIS
+.B jarminal 
+[option] [command]
+.SH LICENSE
+GNU General Public License
+.\" {{{ DESCRIPTION type zo to open fold. zc to close fold
+.SH DESCRIPTION
+.B jarminal
+is a java interactive shell. 
+.br
+Jarminal emulates the python shell and provides a means of executing java commands interactively.
+.br
+The normal procedure to executing the smallest java code is 
+.IP 
+\(bu create the java file
+.IP 
+\(bu compile the java file
+.IP 
+\(bu execute the java class created from step 2 above
+.P
+.br
+This might not be effective if all you want to do is test if a small code snippet will work or not.
+.br
+This shortcoming has been the strenght of languages like python where you can test some code snippets
+.br
+before you finally include them in your project.
+.br
+Jarminal makes this interactive shell functionality available to java programmers too.
+.\" }}}
+
+.\" {{{ OPTIONS type zo to open fold. zc to close fold
+.SH OPTIONS
+.B -e | --execute
+.I escapedstring 
+You can use this option to execute a java code without starting the interactive terminal
+.br
+.IP
+.B SAMPLE
+jarminal -i "System.out.println(\\"Hello World\\");"
+.br 
+.IB NOTE
+that the Hello World is escaped, and the final semi-colon is inside the string
+.P
+.B -i | --interactive
+This command will start the interactive terminal. 
+.br
+.IP
+In this mode, you dont have to escape strings
+.br
+Classes can be defined and they are available throughout the interactive session
+.br
+class declaration can span multiple lines
+.br
+You can import java packages and they are available throughout the session
+.br
+Except for the above, previous commands dont have any effect on the new command
+.br
+To execute a block of code 
+.I (normally across multiple lines) 
+use a open and close brace
+.I { }
+.br
+Control Structures can span multiple lines
+.br
+.\" INTERACTIVE SAMPLES {{{
+.IP
+.B SAMPLE
+.br
+jarminal>> System.out.println("Hello World");
+.br
+Hello World
+.br
+jarminal>> public class One {
+.br
+    public void writeSomething(String something) {
+.br
+        System.out.println(something);
+.br
+    }
+.br
+}
+.br
+jarminal>> new One().writeSomething("jarminal is sooooooo cool");
+.br
+jarminal is sooooooo cool
+.br
+jarminal>> for(int i=0; i<5; i++) {
+.br
+    new One().writeSomething(String.valueOf(i));
+.br
+}
+.br
+1
+.br
+2
+.br
+3
+.br
+4
+.br
+5
+.br
+jarminal>> import javax.swing.*;
+.br
+jarminal>> JOptionPane.showMessageDialog(null, "jarminal on steroids");
+.br
+jarminal>>exit
+.\"}}}
+.P
+.B -h | --help 
+[fqcn]
+.br
+.IP
+Displays a minimal description of how to use jarminal if fqcn is not supplied
+.br
+fqcn - Fully Qualified Class Name. 
+.br
+If a fully qualified class name is provided e.g 
+.I java.util.Hashtable
+jarminal displays a javadoc help page. 
+.br
+But for this to work, you have to configure the java doc path in the config file
+.I /etc/jarminal.conf
+.br
+.IP
+The javadoc help functionality can also be invoked from the interactive shell.
+.br
+.IP
+.B SAMPLE
+jarminal>> help java.awt.Dimension
+.P
+.\"}}}
+
+
+.\" {{{ FILES
+.SH FILES
+.IP
+.I /etc/jarminal.conf
