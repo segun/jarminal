@@ -1,9 +1,0 @@
-#!/bin/bash
-
-. jenv
-
-cd ~/.jarminal
-
-IMPORT_FILE=imports.jarminal
-
-echo "$1" >> $IMPORT_FILE
