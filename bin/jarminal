@@ -55,7 +55,7 @@ start_interactive_terminal() {
 parse_data() {
     cd ~/.jarminal
         
-    HAS_BRACE=`expr index "$1" "{"`
+    HAS_BRACE=`expr "$1" : ".*{"`
     if [ $HAS_BRACE -gt 0 ]
     then
         IS_CLASS_DEF=`is_class_def "$1"`
@@ -70,7 +70,7 @@ parse_data() {
         fi
     fi
 
-    HAS_IMPORT=`expr match "$1" "import"`
+    HAS_IMPORT=`expr "$1" : "import"`
     if [ $HAS_IMPORT -gt 0 ]
     then
         append_to_import_file "$1"
