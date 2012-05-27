@@ -1,13 +1,14 @@
 #!/bin/bash
 
 fully_qualified_class_name="`echo $1 | sed 's/\./\//g'`"
-java_doc_path="`cat /etc/jarminal.conf | grep java_doc_path | gawk -F= '{print $2}' | sed 's/\ //g'`"
+java_doc_path="`cat /etc/jarminal.conf | grep java_doc_path | awk -F= '{print $2}' | sed 's/\ //g'`"
 if [ -d $java_doc_path ]
 then
     file_path="$java_doc_path/api/$fully_qualified_class_name.html"
+	echo $file_path
     if [ -f "$file_path" ]
     then
-        elinks "$file_path"
+        open "$file_path"
     else
         echo -e "\nNo documentation found for $1.\n\tPlease specify fully qualified class names. eg. java.util.Vector\n"
     fi
